@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import Header from "./components/Header";
+import RouteInput from "./components/RouteInput";
+import RouteTable from "./components/RouteTable";
+
+const GlobalStyles = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --primary: rgb(219, 234, 254)
+  }
+
+  html {
+    font-family: sans-serif;
+    text-size-adjust: 100%;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 function App() {
+  const [resource, setResource] = useState("articles");
+  const [nestedResource, setNestedResource] = useState("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GlobalStyles />
+      <Header />
+      <Wrapper>
+        <RouteInput
+          resource={resource}
+          setResource={setResource}
+          nestedResource={nestedResource}
+          setNestedResource={setNestedResource}
+        />
+
+        {resource.length > 0 ? (
+          <RouteTable resource={resource} nestedResource={nestedResource} />
+        ) : (
+          <p>Enter a resource name above!</p>
+        )}
+      </Wrapper>
     </div>
   );
 }
+
+const Wrapper = styled.main`
+  margin: 32px auto;
+  text-align: center;
+`;
 
 export default App;
