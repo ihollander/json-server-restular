@@ -20,8 +20,8 @@ function RouteInput({
         onChange={(e) => setNestedResource(e.target.value)}
       />
       <p>
-        (Type in your resource names and <b>click the table below</b> for full
-        route info)
+        Type in your resource names and <b>click the table below</b> for full
+        route info. Alphanumeric characters only!
       </p>
     </form>
   );

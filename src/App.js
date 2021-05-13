@@ -26,9 +26,21 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+function removeNonAlphanumericFromString(string) {
+  return string.replace(/[^a-zA-Z0-9 -]/g, "");
+}
+
 function App() {
   const [resource, setResource] = useState("articles");
   const [nestedResource, setNestedResource] = useState("");
+
+  function handleResourceChange(resource) {
+    setResource(removeNonAlphanumericFromString(resource));
+  }
+
+  function handleNestedResourceChange(resource) {
+    setNestedResource(removeNonAlphanumericFromString(resource));
+  }
 
   return (
     <div className="App">
@@ -37,15 +49,15 @@ function App() {
       <Wrapper>
         <RouteInput
           resource={resource}
-          setResource={setResource}
+          setResource={handleResourceChange}
           nestedResource={nestedResource}
-          setNestedResource={setNestedResource}
+          setNestedResource={handleNestedResourceChange}
         />
 
         {resource.length > 0 ? (
           <RouteTable resource={resource} nestedResource={nestedResource} />
         ) : (
-          <p>Enter a resource name above!</p>
+          <p>Enter a resource name above! (Alphanumeric characters only)</p>
         )}
       </Wrapper>
     </div>
